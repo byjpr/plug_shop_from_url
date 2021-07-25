@@ -1,18 +1,20 @@
 defmodule PlugShopFromUrl do
   @moduledoc """
-  Documentation for `PlugShopFromUrl`.
+  Loads Shop from URL Params
   """
 
-  @doc """
-  Hello world.
+  @doc false
+  def init(opts), do: opts
 
-  ## Examples
-
-      iex> PlugShopFromUrl.hello()
-      :world
-
-  """
-  def hello do
-    :world
+  @doc false
+  def call(%{private: %{shop_origin_type: :url}} = conn, _config) do
+    conn
+    |> ResourceFromRequest.call(
+      type: :url,
+      param: "shop",
+      private_name: :current_shop_name
+    )
   end
+
+  def call(conn, _config), do: conn
 end
